@@ -4,12 +4,8 @@ import base64
 import json
 import argparse
 from pathlib import Path
-
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
-
-from SmartCamera import ObjectDetectionTop
-from SmartCamera import BoundingBox
-from SmartCamera import BoundingBox2d
+from SmartCamera import ClassificationTop
 
 def process_file(inf_path, metadata_dir):
     # JSON ファイルを読み込む
@@ -25,26 +21,17 @@ def process_file(inf_path, metadata_dir):
             json.dump(buf, file, ensure_ascii=False, indent=4)
     
     # Base64 でデコードされた文字列をデシリアライズ化する
-    ppl_out = ObjectDetectionTop.ObjectDetectionTop.GetRootAsObjectDetectionTop(buf_decode, 0)
-    obj_data = ppl_out.Perception()
-    res_num = obj_data.ObjectDetectionListLength()
+    ppl_out = ClassificationTop.ClassificationTop.GetRootAsClassificationTop(buf_decode, 0)
+    cls_data = ppl_out.Perception()
+    res_num = cls_data.ClassificationListLength()
 
     # デコードしたデータを JSON に変換する
     buf['Inferences'][0].pop('O')
-    
     for i in range(res_num):
-        obj_list = obj_data.ObjectDetectionList(i)
-        union_type = obj_list.BoundingBoxType()
-        if union_type == BoundingBox.BoundingBox.BoundingBox2d:
-            bbox_2d = BoundingBox2d.BoundingBox2d()
-            bbox_2d.Init(obj_list.BoundingBox().Bytes, obj_list.BoundingBox().Pos)
-            buf['Inferences'][0][str(i + 1)] = {}
-            buf['Inferences'][0][str(i + 1)]['C'] = obj_list.ClassId()
-            buf['Inferences'][0][str(i + 1)]['P'] = obj_list.Score()
-            buf['Inferences'][0][str(i + 1)]['X'] = bbox_2d.Left()
-            buf['Inferences'][0][str(i + 1)]['Y'] = bbox_2d.Top()
-            buf['Inferences'][0][str(i + 1)]['x'] = bbox_2d.Right()
-            buf['Inferences'][0][str(i + 1)]['y'] = bbox_2d.Bottom()
+        cls_list = cls_data.ClassificationList(i)
+        buf['Inferences'][0][str(i + 1)] = {}
+        buf['Inferences'][0][str(i + 1)]['class_id'] = cls_list.ClassId()
+        buf['Inferences'][0][str(i + 1)]['score'] = round(cls_list.Score(), 6)
 
     # JSONファイルに変換したデータを保存する
     with open(f'{metadata_dir}/{os.path.basename(inf_path).split(".")[0]}.json', 'w', encoding='utf-8') as file:
