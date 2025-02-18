@@ -1,0 +1,8 @@
+{
+	"method": "ModuleMethodCall",
+	"params": {
+		"moduleMethod": "StopUploadInferenceData",
+		"moduleInstance": "backdoor-EA_Main",
+		"params": {}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"method": "ModuleMethodCall",
+	"params": {
+		"moduleMethod": "StartUploadInferenceData",
+		"moduleInstance": "backdoor-EA_Main",
+		"params": {
+			"CropHOffset": 0,
+			"CropVOffset": 0,
+			"CropHSize": 4056,
+			"CropVSize": 3040,
+			"Mode": 1,
+			"UploadMethod": "HttpStorage",
+			"StorageName": "http://192.168.11.202:62073",
+			"StorageSubDirectoryPath": "images",
+			"UploadMethodIR": "HttpStorage",
+			"StorageNameIR": "http://192.168.11.202:62073",
+			"UploadInterval": 30,
+			"StorageSubDirectoryPathIR": "inferences"
+		}
+	}
+}

@@ -1,3 +1,6 @@
+# プレビューせず保存 python show_inferences_with_save.py -j /path/to/your/file.json -g /path/to/your/background.jpg -s /path/to/save/your/output_image.png
+# 保存せずプレビュー python show_inferences_with_save.py -j /path/to/your/file.json -g /path/to/your/background.jpg
+
 import json
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
