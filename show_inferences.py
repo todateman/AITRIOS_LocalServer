@@ -1,5 +1,5 @@
-# プレビューせず保存 python show_inferences_with_save.py -j /path/to/your/file.json -g /path/to/your/background.jpg -s /path/to/save/your/output_image.png
-# 保存せずプレビュー python show_inferences_with_save.py -j /path/to/your/file.json -g /path/to/your/background.jpg
+# プレビューせず保存 python show_inferences.py -j /path/to/your/file.json -g /path/to/your/background.jpg -s /path/to/save/your/output_image.png
+# 保存せずプレビュー python show_inferences.py -j /path/to/your/file.json -g /path/to/your/background.jpg
 
 import json
 import matplotlib.pyplot as plt
@@ -49,6 +49,7 @@ def plot_inferences(file_path, image_path=None, save_path=None):
     if save_path:
         # 保存先が指定されている場合、画像をファイルとして保存
         plt.savefig(save_path)
+        print(f"推論結果画像を保存しました: %s", save_path)
     else:
         # 保存先が指定されていない場合は、プレビューとして表示
         plt.gca().set_aspect('equal', adjustable='box')

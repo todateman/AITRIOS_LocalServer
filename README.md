@@ -21,6 +21,21 @@ python send_mqtt_message.py -j ./mqtt_json/start.json -b localhost -p 1883 -t "v
 * -t : 送信先のMQTTトピックを指定してください。（指定がない場合はデフォルトトピックとして"v1/devices/me/rpc/request/<ランダムな8桁の数字>"が使用されます）
 
 
+## show_inferences_monitoring.py
+
+推論結果のJSONファイルの生成を監視し、後述の```show_inferences.py```を自動で実行します。
+
+```show_inferences_monitoring.py```は次のようにオプション付きで実行してください。
+
+```bash
+python show_inferences_monitoring.py -j inferences_json -g images -s inferences_images
+```
+
+* -j : 推論結果が格納されているJSONファイルの保存先ディレクトリを相対パスもしくは絶対パスで指定してください。
+* -g : 背景画像ファイル（JPEG形式）の保存先ディレクトリを相対パスもしくは絶対パスで指定してください。
+* -s : 画像の保存先ディレクトリを相対パスもしくは絶対パスで指定してください。
+
+
 ## show_inferences.py
 
 推論結果のメタデータのJSONファイルを図として表示・保存します。
@@ -40,7 +55,7 @@ python show_inferences.py -j ./inferences_json/20250216144204887.json -g ./image
 ```
 
 * -j : 推論結果が格納されているJSONファイルのパスを相対パスもしくは絶対パスで指定してください。
-* -g : 背景画像ファイルのパス（JPEG形式）のパスを相対パスもしくは絶対パスで指定してください。
+* -g : 背景画像ファイル（JPEG形式）のパスを相対パスもしくは絶対パスで指定してください。
 * -s : 画像を保存するパスを相対パスもしくは絶対パスで指定してください。指定した場合、プレビューは表示されません
 
 

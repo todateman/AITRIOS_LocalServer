@@ -9,6 +9,7 @@ import os.path
 import traceback
 import logging
 import threading
+import sys
 
 SAVE_PATH_IMG = 'images'                                        # 画像ファイルの保存先
 SAVE_PATH_META = 'inferences'                                   # メタデータファイルの保存先
@@ -22,6 +23,9 @@ action_type_map = {
     2: "Modified",
     3: "Deleted",
 }
+
+# 現在のPython環境のパスを取得
+python_executable = sys.executable
 
 app_ins = FastAPI()
 # Log format
@@ -72,7 +76,7 @@ def monitor_inferences():
                 if path.endswith('.txt'):
                         logging.info("New file detected: %s", path)
                         #time.sleep(1)  # ファイルが完全に書き込まれるまで待機
-                        subprocess.run(['python', Decode_Prg, '-f', path, '-o', SAVE_PATH_JSON], capture_output=True, text=True)  # Execute Detection_json.py
+                        subprocess.run([python_executable , Decode_Prg, '-f', path, '-o', SAVE_PATH_JSON], capture_output=True, text=True)  # Execute Detection_json.py
 
 # バックグラウンドスレッドでファイル監視を開始する
 @app_ins.on_event("startup")
